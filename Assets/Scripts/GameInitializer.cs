@@ -7,11 +7,15 @@ using UnityEngine;
 /// </summary>
 public class GameInitializer : MonoBehaviour 
 {
-	public GameObject Ship;
-	public GameObject testBorder;
+	public bool isShipSpawning = true;
+	GameObject Ship;
 	void Start()
 	{
-		Instantiate(Ship, Vector3.zero, Quaternion.identity);
+		if (isShipSpawning)
+		{
+			Ship = (GameObject)Resources.Load(@"Prefabs/BlueShip");
+			Instantiate(Ship, Vector3.zero, Quaternion.identity);
+		}
 	}
 
 	/// <summary>
