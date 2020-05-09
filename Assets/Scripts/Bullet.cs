@@ -9,13 +9,6 @@ public class Bullet : MonoBehaviour
 
 	GameObject explosionPrefab;
 
-	AsteroidSpawner asteroidSpawner;
-
-	public AsteroidSpawner AsteroidSpawner
-	{
-		set { asteroidSpawner = value; }
-	}
-
 	Timer lifeTime;
 	void Start()
 	{
@@ -44,7 +37,6 @@ public class Bullet : MonoBehaviour
 		{
 			Detonate();
 			Destroy(collision.gameObject);
-			asteroidSpawner.EventAsteroidDestroyed.Invoke();
 		}
 	}
 

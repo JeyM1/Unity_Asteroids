@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Asteroid
   - AsteroidSpawner
+  - InGameOverlay
   layers:
   - Default
   - TransparentFX

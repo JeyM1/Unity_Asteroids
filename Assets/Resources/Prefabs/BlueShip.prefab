@@ -210,7 +210,7 @@ MonoBehaviour:
   MaxAngularSpeed: 3
   MaxBoostSpeed: 10
   SpeedMultiplier: 3
-  AngularMultiplier: 4
+  AngularMultiplier: 10
   BoostMultiplier: 20
   DecelerationMultiplier: 1.5
   DecelerationRotation: 10

@@ -10,7 +10,7 @@ public class AsteroidSpawner : MonoBehaviour
 	[SerializeField, Range(0, 100)]
 	int MaxAsteroidCount = 0;
 
-	int currentAsteroidCount;
+	int currentBigAsteroidCount;
 
 	[SerializeField, Range(0, 50)]
 	float MinImpulseForce = 2f;
@@ -19,6 +19,7 @@ public class AsteroidSpawner : MonoBehaviour
 
 	const int MaxSpawnTries = 50;
 
+	GameManagerSys gameManager;
 
 	UnityEvent m_EventAsteroidDestroyed = new UnityEvent();
 	public UnityEvent EventAsteroidDestroyed
@@ -37,8 +38,8 @@ public class AsteroidSpawner : MonoBehaviour
 
 	void Start()
     {
-
-		currentAsteroidCount = 0;
+		gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerSys>();
+		currentBigAsteroidCount = 0;
 		// DEBUG
 		if (Asteroids.Count == 0)
 		{
@@ -55,21 +56,13 @@ public class AsteroidSpawner : MonoBehaviour
 		// Left
 		locations[3] = new Vector2(ScreenUtils.ScreenLeft, 0);
 
-		EventAsteroidDestroyed.AddListener(OnAsteroidDestroyed);
+		EventAsteroidDestroyed.AddListener(gameManager.UpdateScore);
 
 		for (int i = 0; i < MaxAsteroidCount; i++)
 		{
 			SpawnNewRandomAsteroid();
 		}
 	}
-
-	/*void Update()
-    {
-        if(currentAsteroidCount < MaxAsteroidCount)
-		{
-			SpawnNewRandomAsteroid();
-		}
-    }*/
 
 	void SpawnNewRandomAsteroid()
 	{
@@ -95,16 +88,18 @@ public class AsteroidSpawner : MonoBehaviour
 			float magnitude = Random.Range(MinImpulseForce, MaxImpulseForce);
 
 			// Instantiating and applying force
-			Instantiate(asteroidToSpawn, location, Quaternion.identity).GetComponent<Rigidbody2D>().AddForce(direction * magnitude, ForceMode2D.Impulse);
-
-			currentAsteroidCount++;
+			GameObject tmp = Instantiate(asteroidToSpawn, location, Quaternion.identity);
+			tmp.GetComponent<Asteroid>().AsteroidSpawner = this;
+			tmp.GetComponent<Asteroid>().IsInMainMenu = gameManager.isInMainMenu;
+			tmp.GetComponent<Rigidbody2D>().AddForce(direction * magnitude, ForceMode2D.Impulse);
+			currentBigAsteroidCount++;
 		}
 	}
 
-	void OnAsteroidDestroyed()
+	public void OnBigAsteroidDestroyed()
 	{
-		currentAsteroidCount--;
-		if(currentAsteroidCount < MaxAsteroidCount)
+		currentBigAsteroidCount--;
+		if(currentBigAsteroidCount < MaxAsteroidCount)
 			SpawnNewRandomAsteroid();
 	}
 }

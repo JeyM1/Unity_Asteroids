@@ -262,6 +262,18 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[23].y
       value: -0.36265326
       objectReference: {fileID: 0}
+    - target: {fileID: 114582221283376490, guid: 8109354f1c6b8524c8ed55e23734abbd,
+        type: 3}
+      propertyPath: childsAsteroids.Array.data[0]
+      value: 
+      objectReference: {fileID: 702804731900114966, guid: 153f6b1c31711a64ab02900cfd93aa7c,
+        type: 3}
+    - target: {fileID: 114582221283376490, guid: 8109354f1c6b8524c8ed55e23734abbd,
+        type: 3}
+      propertyPath: childsAsteroids.Array.data[1]
+      value: 
+      objectReference: {fileID: 702804731900114966, guid: 153f6b1c31711a64ab02900cfd93aa7c,
+        type: 3}
     - target: {fileID: 2770604487041894139, guid: 8109354f1c6b8524c8ed55e23734abbd,
         type: 3}
       propertyPath: m_Sprite

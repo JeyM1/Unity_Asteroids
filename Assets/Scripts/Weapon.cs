@@ -32,9 +32,7 @@ public class Weapon : MonoBehaviour
         if(Input.GetButtonDown("Fire"))
 		{
 			GameObject bullet = Instantiate(bulletPrefab, FirePoint.position, FirePoint.rotation);
-			bullet.GetComponent<Bullet>().AsteroidSpawner = asteroidSpawner;
 			bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.TransformDirection(Vector2.up) * BulletSpeed, ForceMode2D.Impulse);
-
 		}
 	}
 }
