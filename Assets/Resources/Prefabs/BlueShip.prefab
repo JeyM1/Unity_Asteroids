@@ -216,9 +216,6 @@ MonoBehaviour:
   DecelerationRotation: 10
   DecelerationEpsilon: 0.01
   RotationEpsilon: 0.1
-  onShipDestroyed:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &114952989799749074
 MonoBehaviour:
   m_ObjectHideFlags: 0

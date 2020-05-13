@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class InGameOverlay : MonoBehaviour
 {
 	[SerializeField]
 	List<GameObject> showOnPause = new List<GameObject>();
-	public bool paused { get; private set; }
 
 	TextMeshProUGUI scoreText;
 	TextMeshProUGUI timeText;
@@ -35,8 +35,6 @@ public class InGameOverlay : MonoBehaviour
 		timeText = inGameTextObj[1].GetComponent<TextMeshProUGUI>();
 		scoreText.text = scoreTextPrefix + "0";
 		timeText.text = timeTextPrefix + "0:00";
-		
-		paused = false;
 	}
 
 	public void UpdateScore(int score)
@@ -54,21 +52,6 @@ public class InGameOverlay : MonoBehaviour
 		
     }
 
-	void Update()
-	{
-		if (Input.GetButtonDown("Pause"))
-		{
-			if (paused)
-			{
-				ResumeGame();
-			}
-			else
-			{
-				PauseGame();
-			}
-		}
-	}
-
 	public void StopGameTimer()
 	{
 		isTimerStopped = true;
@@ -82,22 +65,25 @@ public class InGameOverlay : MonoBehaviour
 		playTimeSeconds = 0;
 	}
 
-	public void ResumeGame()
+	public void HidePauseOverlay()
 	{
 		foreach (GameObject item in showOnPause)
 		{
 			item.SetActive(false);
 		}
-		Time.timeScale = 1;
-		paused = false;
 	}
-	public void PauseGame()
+	public void ShowPauseOverlay()
 	{
-		Time.timeScale = 0;
 		foreach (GameObject item in showOnPause)
 		{
 			item.SetActive(true);
 		}
-		paused = true;
+	}
+
+	public void BackToMainMenu()
+	{
+		HidePauseOverlay();
+		GameManagerSys.isSwitchingLevel = true;
+		SceneManager.LoadScene("MainMenu");
 	}
 }

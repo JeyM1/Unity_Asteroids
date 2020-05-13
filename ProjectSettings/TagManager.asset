@@ -8,6 +8,8 @@ TagManager:
   - AsteroidSpawner
   - InGameOverlay
   - InGameData
+  - ShowOnPause
+  - DeathScreen
   layers:
   - Default
   - TransparentFX

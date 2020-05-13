@@ -34,7 +34,7 @@ public class Asteroid : MonoBehaviour
 
 	void OnDestroy()
 	{
-		if (!isQuitting && !GameManagerSys.isInMainMenu)
+		if (!isQuitting && !GameManagerSys.isInMainMenu && !GameManagerSys.isSwitchingLevel)
 		{
 			Vector2 currentPos = transform.position;
 			foreach (GameObject asteroid in childsAsteroids)

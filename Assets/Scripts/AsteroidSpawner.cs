@@ -47,12 +47,12 @@ public class AsteroidSpawner : MonoBehaviour
 		locations[2] = new Vector2(0, ScreenUtils.ScreenBottom);
 		// Left
 		locations[3] = new Vector2(ScreenUtils.ScreenLeft, 0);
+	}
 
-
-		for (int i = 0; i < MaxAsteroidCount; i++)
-		{
+	void Update()
+	{
+		if (currentBigAsteroidCount < MaxAsteroidCount)
 			SpawnNewRandomAsteroid();
-		}
 	}
 
 	void SpawnNewRandomAsteroid()
@@ -89,7 +89,5 @@ public class AsteroidSpawner : MonoBehaviour
 	public void OnBigAsteroidDestroyed()
 	{
 		currentBigAsteroidCount--;
-		if(currentBigAsteroidCount < MaxAsteroidCount)
-			SpawnNewRandomAsteroid();
 	}
 }

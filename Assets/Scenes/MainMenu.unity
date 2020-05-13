@@ -1000,6 +1000,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6186826421023820870, guid: aef4e109359d952409e37a8b8c6ef5f0,
         type: 3}
+    - target: {fileID: 4900349454799540851, guid: 5c356538c1a3e6548bcca816cb8c2c0a,
+        type: 3}
+      propertyPath: MaxAsteroidCount
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c356538c1a3e6548bcca816cb8c2c0a, type: 3}
 --- !u!1 &2046771537

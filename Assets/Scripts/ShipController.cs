@@ -43,8 +43,6 @@ public class ShipController : MonoBehaviour
 	Rigidbody2D rigidbody2d;
 	GameObject explosionPrefab;
 
-	[SerializeField]
-	UnityEvent onShipDestroyed = new UnityEvent();
 	void Start()
     {
 		explosionPrefab = (GameObject)Resources.Load(@"Prefabs/Explosion");
@@ -129,11 +127,24 @@ public class ShipController : MonoBehaviour
 		{
 			Instantiate(explosionPrefab, transform.position, Quaternion.identity).transform.localScale = new Vector2(4, 4);
 			Destroy(gameObject);
+			GameManagerSys.OnPlayerShipDestroyed();
 		}
 	}
-
-	void OnDestroy()
+	private void Update()
 	{
-		onShipDestroyed.Invoke();
+		if (Input.GetButtonDown("Pause"))
+		{
+			if (GameManagerSys.isGamePaused)
+			{
+				GameManagerSys.ResumeGame();
+			}
+			else
+			{
+				if (!GameManagerSys.isShowingDeathScreen)
+				{
+					GameManagerSys.PauseGame();
+				}
+			}
+		}
 	}
 }
