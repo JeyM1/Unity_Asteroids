@@ -19,13 +19,6 @@ public class AsteroidSpawner : MonoBehaviour
 
 	const int MaxSpawnTries = 50;
 
-	GameManagerSys gameManager;
-
-	UnityEvent m_EventAsteroidDestroyed = new UnityEvent();
-	public UnityEvent EventAsteroidDestroyed
-	{
-		get { return m_EventAsteroidDestroyed; }
-	}
 
 	/* Cached locations for asteroid spawning:
 	 *	- 0: Top
@@ -38,7 +31,6 @@ public class AsteroidSpawner : MonoBehaviour
 
 	void Start()
     {
-		gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerSys>();
 		currentBigAsteroidCount = 0;
 		// DEBUG
 		if (Asteroids.Count == 0)
@@ -56,7 +48,6 @@ public class AsteroidSpawner : MonoBehaviour
 		// Left
 		locations[3] = new Vector2(ScreenUtils.ScreenLeft, 0);
 
-		EventAsteroidDestroyed.AddListener(gameManager.UpdateScore);
 
 		for (int i = 0; i < MaxAsteroidCount; i++)
 		{
@@ -90,7 +81,6 @@ public class AsteroidSpawner : MonoBehaviour
 			// Instantiating and applying force
 			GameObject tmp = Instantiate(asteroidToSpawn, location, Quaternion.identity);
 			tmp.GetComponent<Asteroid>().AsteroidSpawner = this;
-			tmp.GetComponent<Asteroid>().IsInMainMenu = gameManager.isInMainMenu;
 			tmp.GetComponent<Rigidbody2D>().AddForce(direction * magnitude, ForceMode2D.Impulse);
 			currentBigAsteroidCount++;
 		}

@@ -5,14 +5,12 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
 	GameObject bulletPrefab;
+	Rigidbody2D ship_rgbd;
 
 	[SerializeField]
 	float BulletSpeed = 5f;
 
 	Transform FirePoint;
-
-	// cached for efficiency
-	AsteroidSpawner asteroidSpawner;
 	void Start()
     {
 		bulletPrefab = (GameObject)Resources.Load(@"Prefabs/Bullet");
@@ -22,8 +20,7 @@ public class Weapon : MonoBehaviour
 		}
 
 		FirePoint = transform.GetChild(0);
-
-		asteroidSpawner = GameObject.FindGameObjectWithTag("AsteroidSpawner").GetComponent<AsteroidSpawner>();
+		ship_rgbd = GetComponent<Rigidbody2D>();
 	}
 
     // Update is called once per frame
@@ -31,8 +28,10 @@ public class Weapon : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire"))
 		{
+			Vector2 shipSpeed = ship_rgbd.velocity;
+
 			GameObject bullet = Instantiate(bulletPrefab, FirePoint.position, FirePoint.rotation);
-			bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.TransformDirection(Vector2.up) * BulletSpeed, ForceMode2D.Impulse);
+			bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.TransformDirection(Vector2.up) * BulletSpeed + new Vector3(shipSpeed.x, shipSpeed.y), ForceMode2D.Impulse);
 		}
 	}
 }

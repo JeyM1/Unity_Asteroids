@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ShipController : MonoBehaviour
 {
@@ -42,6 +43,8 @@ public class ShipController : MonoBehaviour
 	Rigidbody2D rigidbody2d;
 	GameObject explosionPrefab;
 
+	[SerializeField]
+	UnityEvent onShipDestroyed = new UnityEvent();
 	void Start()
     {
 		explosionPrefab = (GameObject)Resources.Load(@"Prefabs/Explosion");
@@ -127,5 +130,10 @@ public class ShipController : MonoBehaviour
 			Instantiate(explosionPrefab, transform.position, Quaternion.identity).transform.localScale = new Vector2(4, 4);
 			Destroy(gameObject);
 		}
+	}
+
+	void OnDestroy()
+	{
+		onShipDestroyed.Invoke();
 	}
 }

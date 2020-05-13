@@ -8,22 +8,21 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour 
 {
 	public bool isShipSpawning = true;
-	GameObject Ship;
+	GameObject ShipPrefab;
+
+
 	void Start()
 	{
 		if (isShipSpawning)
 		{
-			Ship = (GameObject)Resources.Load(@"Prefabs/BlueShip");
-			Instantiate(Ship, Vector3.zero, Quaternion.identity);
+			ShipPrefab = (GameObject)Resources.Load(@"Prefabs/BlueShip");
+			Instantiate(ShipPrefab, Vector3.zero, Quaternion.identity);
 		}
 	}
 
-	/// <summary>
-	/// Awake is called before Start
-	/// </summary>
 	void Awake()
     {
-        // initialize screen utils
         ScreenUtils.Initialize();
-    }
+		GameManagerSys.Initialize();
+	}
 }

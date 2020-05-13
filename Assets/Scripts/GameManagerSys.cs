@@ -5,10 +5,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GameManagerSys : MonoBehaviour
+public class GameManagerSys
 {
-	InGameOverlay inGameOverlay;
-	public bool isInMainMenu
+
+	private static GameManagerSys instance;
+
+	static InGameOverlay inGameOverlay;
+	public static bool isInMainMenu
 	{
 		get
 		{
@@ -16,35 +19,29 @@ public class GameManagerSys : MonoBehaviour
 		}
 	}
 
-	private int score;
-	private int bestScoreSession;
+	private static int score;
+	private static int bestScoreSession;
 
-    void Start()
-    {
-		DontDestroyOnLoad(gameObject);
-	}
-
-	void OnEnable()
+	static void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
 	{
-		//Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
-		SceneManager.sceneLoaded += OnLevelFinishedLoading;
-	}
-
-	void OnDisable()
-	{
-		//Tell our 'OnLevelFinishedLoading' function to stop listening for a scene change as soon as this script is disabled. Remember to always have an unsubscription for every delegate you subscribe to!
-		SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-	}
-
-	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-	{
-		if(scene.name != "MainMenu")
+		if (scene.name != "MainMenu")
 		{
 			inGameOverlay = GameObject.FindGameObjectWithTag("InGameOverlay").GetComponent<InGameOverlay>();
 		}
 	}
 
-	public void UpdateScore()
+	public static void Initialize()
+	{
+		if (instance == null)
+		{
+			instance = new GameManagerSys();
+			SceneManager.sceneLoaded += OnLevelFinishedLoading;
+			Debug.Log("Constructing GameManager");
+		}
+	}
+
+	
+	public static void IncrementScore()
 	{
 		score++;
 		inGameOverlay.UpdateScore(score);

@@ -8,15 +8,6 @@ public class Asteroid : MonoBehaviour
 	float circleColliderRadius;
 
 	private bool isQuitting = false;
-	private bool isInMainMenu;
-
-	public bool IsInMainMenu
-	{
-		set
-		{
-			this.isInMainMenu = value;
-		}
-	}
 
 	private AsteroidSpawner asteroidSpawner;
 	public AsteroidSpawner AsteroidSpawner
@@ -37,15 +28,13 @@ public class Asteroid : MonoBehaviour
 
 	void Start()
 	{
-		//asteroidSpawner = GameObject.FindGameObjectWithTag("AsteroidSpawner").GetComponent<AsteroidSpawner>();
 		circleColliderRadius = GetComponent<CircleCollider2D>().radius;
 		speed = GetComponent<Rigidbody2D>().velocity;
-		//isInMainMenu = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerSys>().isInMainMenu;
 	}
 
 	void OnDestroy()
 	{
-		if (!isQuitting && !isInMainMenu)
+		if (!isQuitting && !GameManagerSys.isInMainMenu)
 		{
 			Vector2 currentPos = transform.position;
 			foreach (GameObject asteroid in childsAsteroids)
@@ -58,8 +47,8 @@ public class Asteroid : MonoBehaviour
 				tmp.GetComponent<Rigidbody2D>().velocity = new Vector2(speed.x + Random.Range(-0.5f, 0.5f), speed.y + Random.Range(-0.5f, 0.5f));
 				tmp.GetComponent<Asteroid>().AsteroidSpawner = asteroidSpawner;
 			}
-			asteroidSpawner.EventAsteroidDestroyed.Invoke();
-			if(childsAsteroids.Count == 0)
+			GameManagerSys.IncrementScore();
+			if(childsAsteroids.Count != 0)
 			{
 				asteroidSpawner.OnBigAsteroidDestroyed();
 			}

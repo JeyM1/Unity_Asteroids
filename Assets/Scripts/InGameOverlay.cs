@@ -7,11 +7,15 @@ using System;
 
 public class InGameOverlay : MonoBehaviour
 {
+	[SerializeField]
+	List<GameObject> showOnPause = new List<GameObject>();
+	public bool paused { get; private set; }
+
 	TextMeshProUGUI scoreText;
 	TextMeshProUGUI timeText;
 
 	float playTimeSeconds = 0f;
-	public bool isTimerStopped = false;
+	public bool isTimerStopped { get; private set; } = false;
 
 	public float PlayTimeSeconds
 	{
@@ -20,25 +24,25 @@ public class InGameOverlay : MonoBehaviour
 			return playTimeSeconds;
 		}
 	}
-		
-
+	
 	private string scoreTextPrefix = "Score: ";
 	private string timeTextPrefix = "Time: ";
 
 	void Start()
     {
-		TextMeshProUGUI[] allText = GetComponentsInChildren<TextMeshProUGUI>();
-		scoreText = allText[0];
-		timeText = allText[1];
+		GameObject[] inGameTextObj = GameObject.FindGameObjectsWithTag("InGameData");
+		scoreText = inGameTextObj[0].GetComponent<TextMeshProUGUI>();
+		timeText = inGameTextObj[1].GetComponent<TextMeshProUGUI>();
 		scoreText.text = scoreTextPrefix + "0";
 		timeText.text = timeTextPrefix + "0:00";
+		
+		paused = false;
 	}
 
 	public void UpdateScore(int score)
 	{
 		scoreText.text = scoreTextPrefix + score;
 	}
-
 
     void FixedUpdate()
     {
@@ -47,5 +51,53 @@ public class InGameOverlay : MonoBehaviour
 			playTimeSeconds += Time.fixedDeltaTime;
 			timeText.text = timeTextPrefix + TimeSpan.FromSeconds(playTimeSeconds).ToString(@"mm\:ss");
 		}
+		
     }
+
+	void Update()
+	{
+		if (Input.GetButtonDown("Pause"))
+		{
+			if (paused)
+			{
+				ResumeGame();
+			}
+			else
+			{
+				PauseGame();
+			}
+		}
+	}
+
+	public void StopGameTimer()
+	{
+		isTimerStopped = true;
+	}
+	public void StartGameTimer()
+	{
+		isTimerStopped = false;
+	}
+	public void ResetGameTimer()
+	{
+		playTimeSeconds = 0;
+	}
+
+	public void ResumeGame()
+	{
+		foreach (GameObject item in showOnPause)
+		{
+			item.SetActive(false);
+		}
+		Time.timeScale = 1;
+		paused = false;
+	}
+	public void PauseGame()
+	{
+		Time.timeScale = 0;
+		foreach (GameObject item in showOnPause)
+		{
+			item.SetActive(true);
+		}
+		paused = true;
+	}
 }
