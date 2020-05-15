@@ -8,9 +8,9 @@ using System;
 public class DeathScreen : MonoBehaviour
 {
 	[SerializeField]
-	TextMeshProUGUI endScoreText;
+	TextMeshProUGUI endScoreText = null;
 	[SerializeField]
-	TextMeshProUGUI endTimeText;
+	TextMeshProUGUI endTimeText = null;
 
 	private string endScoreTextPrefix = "Total score: ";
 	private string endTimeTextPrefix = "Total time: ";

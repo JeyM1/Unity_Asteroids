@@ -80,9 +80,14 @@ public class InGameOverlay : MonoBehaviour
 		}
 	}
 
+	public void ResumeGame()
+	{
+		GameManagerSys.ResumeGame();
+	}
+
 	public void BackToMainMenu()
 	{
-		HidePauseOverlay();
+		GameManagerSys.ResumeGame();
 		GameManagerSys.isSwitchingLevel = true;
 		SceneManager.LoadScene("MainMenu");
 	}

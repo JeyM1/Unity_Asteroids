@@ -125,6 +125,7 @@ public class ShipController : MonoBehaviour
 	{
 		if(collision.gameObject.tag.Equals("Asteroid"))
 		{
+			AudioManager.Play(AudioClipName.ExplosionBig);
 			Instantiate(explosionPrefab, transform.position, Quaternion.identity).transform.localScale = new Vector2(4, 4);
 			Destroy(gameObject);
 			GameManagerSys.OnPlayerShipDestroyed();

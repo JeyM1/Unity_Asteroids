@@ -42,6 +42,7 @@ public class Bullet : MonoBehaviour
 
 	void Detonate()
 	{
+		AudioManager.Play(AudioClipName.ExplosionSmall);
 		Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 		Destroy(gameObject);
 	}

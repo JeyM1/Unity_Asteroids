@@ -26,10 +26,11 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Fire"))
+        if(Input.GetButtonDown("Fire") && !GameManagerSys.isGamePaused)
 		{
 			Vector2 shipSpeed = ship_rgbd.velocity;
 
+			AudioManager.Play(AudioClipName.Fire1);
 			GameObject bullet = Instantiate(bulletPrefab, FirePoint.position, FirePoint.rotation);
 			bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.TransformDirection(Vector2.up) * BulletSpeed + new Vector3(shipSpeed.x, shipSpeed.y), ForceMode2D.Impulse);
 		}

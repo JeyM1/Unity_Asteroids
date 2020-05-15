@@ -63,6 +63,7 @@ public class GameManagerSys
 			instance = new GameManagerSys();
 			SceneManager.sceneLoaded += OnLevelFinishedLoading;
 			deathScreenPrefab = (GameObject)Resources.Load(@"Prefabs/DeathScreen");
+			AudioManager.Initialize();
 		}
 	}
 	
